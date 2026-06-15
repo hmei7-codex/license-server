@@ -1,7 +1,10 @@
 export default {
   async fetch(request, env) {
+    const value = await env.LICENSES.get("NEO-123456");
+
     return Response.json({
-      licenses_exists: !!env.LICENSES
+      found: value !== null,
+      value
     });
   }
 }
