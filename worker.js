@@ -1,17 +1,5 @@
-const LICENSES = {
-  "NEO-123456": {
-    status: "active",
-    expire: "2027-01-01"
-  },
-
-  "NEO-999999": {
-    status: "inactive",
-    expire: "2027-01-01"
-  }
-};
-
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
     const url = new URL(request.url);
 
     if (url.pathname === "/check") {
@@ -24,14 +12,16 @@ export default {
         });
       }
 
-      const data = LICENSES[license];
+      const raw = await env.LICENSES.get(license);
 
-      if (!data) {
+      if (!raw) {
         return Response.json({
           success: false,
           message: "license not found"
         });
       }
+
+      const data = JSON.parse(raw);
 
       return Response.json({
         success: true,
@@ -41,6 +31,6 @@ export default {
       });
     }
 
-    return new Response("NeoCloud License Server v1");
+    return new Response("NeoCloud License Server v2");
   }
 }
