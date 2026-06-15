@@ -13,7 +13,9 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // ===== REGISTER LICENSE =====
+    // ==========================
+    // REGISTER LICENSE
+    // ==========================
     if (url.pathname === "/register") {
 
       const admin = url.searchParams.get("admin");
@@ -28,12 +30,14 @@ export default {
 
       const key = randomKey();
 
-      const expire = new Date();
-      expire.setDate(expire.getDate() + days);
+      const expire = new Date(
+        Date.now() + (days * 86400000)
+      );
 
       const data = {
         status: "active",
-        expire: expire.toISOString().split("T")[0]
+        created: new Date().toISOString(),
+        expire: expire.toISOString()
       };
 
       await env.LICENSES.put(
@@ -44,11 +48,54 @@ export default {
       return Response.json({
         success: true,
         key,
-        ...data
+        status: data.status,
+        expire: data.expire
       });
     }
 
-    // ===== CHECK LICENSE =====
+    // ==========================
+    // DISABLE LICENSE
+    // ==========================
+    if (url.pathname === "/disable") {
+
+      const admin = url.searchParams.get("admin");
+      const key = url.searchParams.get("key");
+
+      if (admin !== "NEOADMIN123") {
+        return Response.json({
+          success: false,
+          message: "Unauthorized"
+        });
+      }
+
+      const raw = await env.LICENSES.get(key);
+
+      if (!raw) {
+        return Response.json({
+          success: false,
+          message: "License not found"
+        });
+      }
+
+      const license = JSON.parse(raw);
+
+      license.status = "inactive";
+
+      await env.LICENSES.put(
+        key,
+        JSON.stringify(license)
+      );
+
+      return Response.json({
+        success: true,
+        key,
+        status: "inactive"
+      });
+    }
+
+    // ==========================
+    // CHECK LICENSE
+    // ==========================
     const key = url.searchParams.get("key");
 
     if (!key) {
@@ -76,19 +123,44 @@ export default {
       });
     }
 
-    const today = new Date();
-    const expire = new Date(license.expire);
+    const now = Date.now();
+    const expire = new Date(license.expire).getTime();
 
-    if (expire < today) {
+    if (expire <= now) {
       return Response.json({
         valid: false,
         message: "License expired"
       });
     }
 
+    const remainingSeconds =
+      Math.floor((expire - now) / 1000);
+
+    const days = Math.floor(
+      remainingSeconds / 86400
+    );
+
+    const hours = Math.floor(
+      (remainingSeconds % 86400) / 3600
+    );
+
+    const minutes = Math.floor(
+      (remainingSeconds % 3600) / 60
+    );
+
+    const seconds = remainingSeconds % 60;
+
     return Response.json({
       valid: true,
-      license
+      key,
+      status: license.status,
+      expire: license.expire,
+      remaining: {
+        days,
+        hours,
+        minutes,
+        seconds
+      }
     });
   }
 }
