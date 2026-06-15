@@ -11,7 +11,8 @@ function randomKey() {
   return result;
 }
 
-const ADMIN_KEY = "NeoL@ze_X9K7M2+Q8P4R6T1%_2026";
+const ADMIN_USER = "neocloude";
+const ADMIN_KEY = "Q@8xLm#4T$9vNp%2Kr&7Wd!5Ys^3Fc";
 
 export default {
   async fetch(request, env) {
@@ -27,7 +28,15 @@ export default {
         url.searchParams.get("days") || "30"
       );
 
-      if (admin !== ADMIN_KEY) {
+      const user = url.searchParams.get("user");
+      const admin = url.searchParams.get("admin");
+
+      if (user !== ADMIN_USER || admin !== ADMIN_KEY) {
+        return Response.json({
+          success: false,
+          message: "Unauthorized"
+        });
+      }
         return Response.json({
           success: false,
           message: "Unauthorized"
