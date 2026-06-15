@@ -1,5 +1,12 @@
 {
   "name": "vip",
   "main": "worker.js",
-  "compatibility_date": "2025-11-29"
+  "compatibility_date": "2025-11-29",
+
+  "kv_namespaces": [
+    {
+      "binding": "LICENSES",
+      "id": "244e9ed16ffd4a4694cad48140981f"
+    }
+  ]
 }
