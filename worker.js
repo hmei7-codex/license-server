@@ -1,4 +1,9 @@
-function randomKey() {
+
+  return Response.json({
+    success: true,
+    key,
+    ...license
+  });function randomKey() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   let result = "NEO-";
 
@@ -92,7 +97,38 @@ export default {
         status: "inactive"
       });
     }
+    // ==========================
+    // INFO LICENSE
+    // ==========================
+    if (url.pathname === "/info") {
 
+      const admin = url.searchParams.get("admin");
+      const key = url.searchParams.get("key");
+
+      if (admin !== "PASSWORD_ADMIN_KAMU") {
+        return Response.json({
+          success: false,
+          message: "Unauthorized"
+        });
+      }
+
+      const raw = await env.LICENSES.get(key);
+
+      if (!raw) {
+        return Response.json({
+          success: false,
+          message: "License not found"
+        });
+      }
+
+      const license = JSON.parse(raw);
+      return Response.json({
+        success: true,
+        key,
+        ...license
+        });
+
+      }
     // ==========================
     // CHECK LICENSE
     // ==========================
