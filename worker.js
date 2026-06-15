@@ -67,10 +67,11 @@ export default {
     // ==========================
     if (url.pathname === "/disable") {
 
+      const user = url.searchParams.get("user");
       const admin = url.searchParams.get("admin");
       const key = url.searchParams.get("key");
 
-      if (admin !== ADMIN_KEY) {
+      if (user !== ADMIN_USER || admin !== ADMIN_KEY) {
         return Response.json({
           success: false,
           message: "Unauthorized"
@@ -107,10 +108,11 @@ export default {
     // ==========================
     if (url.pathname === "/info") {
 
+      const user = url.searchParams.get("user");
       const admin = url.searchParams.get("admin");
       const key = url.searchParams.get("key");
 
-      if (admin !== ADMIN_KEY) {
+      if (user !== ADMIN_USER || admin !== ADMIN_KEY) {
         return Response.json({
           success: false,
           message: "Unauthorized"
