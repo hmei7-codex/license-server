@@ -12,7 +12,7 @@ function randomKey() {
 }
 
 const ADMIN_USER = "neocloude";
-const ADMIN_KEY = "Q@8xLm#4T$9vNp%2Kr&7Wd!5Ys^3Fc";
+const ADMIN_KEY = "NeoLaze_X9K7M2_Q8P4R6T1_2026";
 
 export default {
   async fetch(request, env) {
