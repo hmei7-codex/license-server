@@ -11,7 +11,7 @@ function randomKey() {
   return result;
 }
 
-const ADMIN_KEY = "NEOADMIN123";
+const ADMIN_KEY = "NeoL@ze_X9K7M2+Q8P4R6T1%_2026";
 
 export default {
   async fetch(request, env) {
