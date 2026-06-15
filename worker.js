@@ -23,20 +23,14 @@ export default {
     // ==========================
     if (url.pathname === "/register") {
 
+      const user = url.searchParams.get("user");
       const admin = url.searchParams.get("admin");
+
       const days = parseInt(
         url.searchParams.get("days") || "30"
       );
 
-      const user = url.searchParams.get("user");
-      const admin = url.searchParams.get("admin");
-
       if (user !== ADMIN_USER || admin !== ADMIN_KEY) {
-        return Response.json({
-          success: false,
-          message: "Unauthorized"
-        });
-      }
         return Response.json({
           success: false,
           message: "Unauthorized"
