@@ -1,18 +1,17 @@
-
-  return Response.json({
-    success: true,
-    key,
-    ...license
-  });function randomKey() {
+function randomKey() {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   let result = "NEO-";
 
   for (let i = 0; i < 6; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
+    result += chars.charAt(
+      Math.floor(Math.random() * chars.length)
+    );
   }
 
   return result;
 }
+
+const ADMIN_KEY = "NEOADMIN123";
 
 export default {
   async fetch(request, env) {
@@ -24,9 +23,11 @@ export default {
     if (url.pathname === "/register") {
 
       const admin = url.searchParams.get("admin");
-      const days = parseInt(url.searchParams.get("days") || "30");
+      const days = parseInt(
+        url.searchParams.get("days") || "30"
+      );
 
-      if (admin !== "NEOADMIN123") {
+      if (admin !== ADMIN_KEY) {
         return Response.json({
           success: false,
           message: "Unauthorized"
@@ -66,7 +67,7 @@ export default {
       const admin = url.searchParams.get("admin");
       const key = url.searchParams.get("key");
 
-      if (admin !== "NEOADMIN123") {
+      if (admin !== ADMIN_KEY) {
         return Response.json({
           success: false,
           message: "Unauthorized"
@@ -97,6 +98,7 @@ export default {
         status: "inactive"
       });
     }
+
     // ==========================
     // INFO LICENSE
     // ==========================
@@ -105,7 +107,7 @@ export default {
       const admin = url.searchParams.get("admin");
       const key = url.searchParams.get("key");
 
-      if (admin !== "PASSWORD_ADMIN_KAMU") {
+      if (admin !== ADMIN_KEY) {
         return Response.json({
           success: false,
           message: "Unauthorized"
@@ -122,13 +124,14 @@ export default {
       }
 
       const license = JSON.parse(raw);
+
       return Response.json({
         success: true,
         key,
         ...license
-        });
+      });
+    }
 
-      }
     // ==========================
     // CHECK LICENSE
     // ==========================
@@ -160,7 +163,9 @@ export default {
     }
 
     const now = Date.now();
-    const expire = new Date(license.expire).getTime();
+    const expire = new Date(
+      license.expire
+    ).getTime();
 
     if (expire <= now) {
       return Response.json({
@@ -184,12 +189,14 @@ export default {
       (remainingSeconds % 3600) / 60
     );
 
-    const seconds = remainingSeconds % 60;
+    const seconds =
+      remainingSeconds % 60;
 
     return Response.json({
       valid: true,
       key,
       status: license.status,
+      created: license.created,
       expire: license.expire,
       remaining: {
         days,
@@ -199,4 +206,4 @@ export default {
       }
     });
   }
-}
+};
