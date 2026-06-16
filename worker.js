@@ -18,6 +18,7 @@ function generateToken() {
 
 const ADMIN_USER = "neocloude";
 const ADMIN_KEY = "NeoLaze_X9K7M2_Q8P4R6T1_2026";
+const SHRINKEARN_API = env.SHRINKEARN_API;
 
 export default {
   async fetch(request, env) {
