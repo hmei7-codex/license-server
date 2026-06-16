@@ -366,6 +366,39 @@ export default {
     }
 
     // ==========================
+    // CONFIG
+    // ==========================
+    if (url.pathname === "/config") {
+
+      const token =
+        url.searchParams.get("token");
+
+      if (!token) {
+        return Response.json({
+          success: false,
+          message: "Token required"
+        });
+      }
+
+      const raw =
+        await env.TOKENS.get(token);
+
+      if (!raw) {
+        return Response.json({
+          success: false,
+          message: "Invalid session"
+        });
+      }
+
+      return Response.json({
+        success: true,
+        version: "1.0.0",
+        api_url: "https://example.com",
+        message: "Authorized"
+      });
+    }
+
+    // ==========================
     // CHECK LICENSE
     // ==========================
     const key = url.searchParams.get("key");
