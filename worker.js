@@ -45,6 +45,31 @@ export default {
         token
       });
     }
+    // ==========================
+    // CREATE SHRINKEARN LINK
+    // ==========================
+    if (url.pathname === "/create-link") {
+
+      const token = generateToken();
+
+      await env.TOKENS.put(
+        token,
+        JSON.stringify({
+          created: Date.now()
+        }),
+        {
+          expirationTtl: 3600
+        }
+      );
+
+      const targetUrl =
+        `https://vip.neolaze.workers.dev/success?token=${token}`;
+
+      return Response.json({
+        success: true,
+        targetUrl
+      });
+    }
 
     // ==========================
     // SUCCESS
