@@ -413,7 +413,7 @@ export default {
         success: true,
         version: "1.0.0",
         force_update: false,
-        expected_hash: "edb510960594de19314f8fcfa585f5edd1c7b175736b55c1b1761c967eba96da"
+        expected_hash: "c2576e2e9fde54bb1eb2d0ca91939bc2e0b0242e8c95d62d488bcd9baad71b3a"
       });
     }
 
