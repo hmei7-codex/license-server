@@ -69,12 +69,12 @@ export default {
       `https://shrinkearn.com/api?api=${SHRINKEARN_API}&url=${encodeURIComponent(targetUrl)}`;
 
       const response = await fetch(apiUrl);
-      const result = await response.json();
+      const result = await response.text();
 
       return Response.json({
         success: true,
-        targetUrl,
-        shrinkearn: result.shortenedUrl
+        apiUrl,
+        result
       });
     }
 
