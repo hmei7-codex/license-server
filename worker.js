@@ -409,11 +409,11 @@ export default {
     // VERSION
     // ==========================
     if (url.pathname === "/version") {
-
       return Response.json({
         success: true,
         version: "1.0.0",
-        force_update: false
+        force_update: false,
+        expected_hash: "edb510960594de19314f8fcfa585f5edd1c7b175736b55c1b1761c967eba96da"
       });
     }
 
