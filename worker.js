@@ -321,6 +321,51 @@ export default {
     }
 
     // ==========================
+    // CREATE SESSION
+    // ==========================
+    if (url.pathname === "/session") {
+
+      const key =
+        url.searchParams.get("key");
+
+      if (!key) {
+        return Response.json({
+          success: false,
+          message: "Key required"
+        });
+      }
+
+      const raw =
+        await env.LICENSES.get(key);
+
+      if (!raw) {
+        return Response.json({
+          success: false,
+          message: "License not found"
+        });
+      }
+
+      const token =
+        crypto.randomUUID();
+
+      await env.TOKENS.put(
+        token,
+        JSON.stringify({
+          key,
+          created: Date.now()
+        }),
+        {
+          expirationTtl: 300
+        }
+      );
+
+      return Response.json({
+        success: true,
+        token
+      });
+    }
+
+    // ==========================
     // CHECK LICENSE
     // ==========================
     const key = url.searchParams.get("key");
