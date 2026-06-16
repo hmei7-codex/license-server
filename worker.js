@@ -65,9 +65,16 @@ export default {
       const targetUrl =
         `https://vip.neolaze.workers.dev/success?token=${token}`;
 
+      const apiUrl =
+      `https://shrinkearn.com/api?api=${SHRINKEARN_API}&url=${encodeURIComponent(targetUrl)}`;
+
+      const response = await fetch(apiUrl);
+      const result = await response.json();
+
       return Response.json({
         success: true,
-        targetUrl
+        targetUrl,
+        shrinkearn: result.shortenedUrl
       });
     }
 
