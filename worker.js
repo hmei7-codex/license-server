@@ -112,7 +112,7 @@ export default {
       const key = randomKey();
 
       const expire = new Date(
-        Date.now() + 86400000
+        Date.now() + (5 * 60 * 60 * 1000)
       );
 
       const data = {
