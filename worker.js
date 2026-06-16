@@ -125,6 +125,13 @@ export default {
         key,
         JSON.stringify(data)
       );
+      await env.USERS.put(
+        chatId,
+        JSON.stringify({
+          key,
+          expire: data.expire
+        })
+      );
 
       if (chatId) {
         await fetch(
