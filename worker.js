@@ -71,10 +71,11 @@ export default {
       const response = await fetch(apiUrl);
       const result = await response.text();
 
+      const data = JSON.parse(result);
+
       return Response.json({
         success: true,
-        apiUrl,
-        result
+        shrinkearn: data.shortenedUrl
       });
     }
 
