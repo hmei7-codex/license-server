@@ -22,6 +22,7 @@ export default {
   async fetch(request, env) {
     const ADMIN_KEY = env.ADMIN_KEY;
     const SHRINKEARN_API = env.SHRINKEARN_API;
+    const BOT_TOKEN = env.BOT_TOKEN;
     const url = new URL(request.url);
     // ==========================
     // CREATE TOKEN
