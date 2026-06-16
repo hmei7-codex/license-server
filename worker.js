@@ -50,13 +50,15 @@ export default {
     // CREATE SHRINKEARN LINK
     // ==========================
     if (url.pathname === "/create-link") {
-
+      
+      const chatId = url.searchParams.get("chat_id");
       const token = generateToken();
 
       await env.TOKENS.put(
         token,
         JSON.stringify({
-          created: Date.now()
+          created: Date.now(),
+          chatId
         }),
         {
           expirationTtl: 3600
