@@ -2,6 +2,9 @@
   "name": "vip",
   "main": "worker.js",
   "compatibility_date": "2025-11-29",
+  "vars": {
+    "ADMIN_USER": "neocloude"
+  },
 
   "kv_namespaces": [
     {
