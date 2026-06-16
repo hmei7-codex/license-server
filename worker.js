@@ -17,11 +17,10 @@ function generateToken() {
 }
 
 const ADMIN_USER = "neocloude";
-const ADMIN_KEY = "NeoLaze_X9K7M2_Q8P4R6T1_2026";
-
 
 export default {
   async fetch(request, env) {
+    const ADMIN_KEY = env.ADMIN_KEY;
     const url = new URL(request.url);
     // ==========================
     // CREATE TOKEN
