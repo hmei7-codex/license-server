@@ -406,6 +406,18 @@ export default {
     }
 
     // ==========================
+    // VERSION
+    // ==========================
+    if (url.pathname === "/version") {
+
+      return Response.json({
+        success: true,
+        version: "1.0.0",
+        force_update: false
+      });
+    }
+
+    // ==========================
     // CHECK LICENSE
     // ==========================
     const key = url.searchParams.get("key");
