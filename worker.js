@@ -46,6 +46,54 @@ export default {
     }
 
     // ==========================
+    // SUCCESS
+    // ==========================
+    if (url.pathname === "/success") {
+
+      const token = url.searchParams.get("token");
+
+      if (!token) {
+        return Response.json({
+          success: false,
+          message: "Token required"
+        });
+      }
+
+      const tokenData = await env.TOKENS.get(token);
+
+      if (!tokenData) {
+        return Response.json({
+          success: false,
+          message: "Invalid token"
+        });
+      }
+
+      await env.TOKENS.delete(token);
+
+      const key = randomKey();
+
+      const expire = new Date(
+        Date.now() + 86400000
+      );
+
+      const data = {
+        status: "active",
+        created: new Date().toISOString(),
+        expire: expire.toISOString()
+      };
+
+      await env.LICENSES.put(
+        key,
+        JSON.stringify(data)
+      );
+
+      return Response.json({
+        success: true,
+        key,
+        expire: data.expire
+      });
+    }
+    // ==========================
     // REGISTER LICENSE
     // ==========================
     if (url.pathname === "/register") {
