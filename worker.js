@@ -97,15 +97,15 @@ export default {
       }
 
       const tokenData = await env.TOKENS.get(token);
-      const tokenInfo = JSON.parse(tokenData);
-      const chatId = tokenInfo.chatId;
-
+      
       if (!tokenData) {
         return Response.json({
           success: false,
           message: "Invalid token"
         });
       }
+      const tokenInfo = JSON.parse(tokenData);
+      const chatId = tokenInfo.chatId;
 
       await env.TOKENS.delete(token);
 
