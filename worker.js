@@ -275,6 +275,50 @@ export default {
         ...license
       });
     }
+    
+    // ==========================
+    // USER STATUS
+    // ==========================
+    if (url.pathname === "/user") {
+
+      const chatId =
+        url.searchParams.get("chat_id");
+
+      if (!chatId) {
+        return Response.json({
+          active: false
+        });
+      }
+
+      const raw =
+        await env.USERS.get(chatId);
+
+      if (!raw) {
+        return Response.json({
+          active: false
+        });
+      }
+
+      const user =
+        JSON.parse(raw);
+
+      const now = Date.now();
+
+      const expire =
+        new Date(user.expire).getTime();
+
+      if (expire <= now) {
+        return Response.json({
+          active: false
+        });
+      }
+
+      return Response.json({
+        active: true,
+        key: user.key,
+        expire: user.expire
+      });
+    }
 
     // ==========================
     // CHECK LICENSE
