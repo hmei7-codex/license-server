@@ -11,12 +11,38 @@ function randomKey() {
   return result;
 }
 
+function generateToken() {
+  return crypto.randomUUID();
+}
+
 const ADMIN_USER = "neocloude";
 const ADMIN_KEY = "NeoLaze_X9K7M2_Q8P4R6T1_2026";
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    // ==========================
+    // CREATE TOKEN
+    // ==========================
+    if (url.pathname === "/token") {
+
+      const token = generateToken();
+
+      await env.TOKENS.put(
+        token,
+        JSON.stringify({
+          created: Date.now()
+        }),
+        {
+          expirationTtl: 3600
+        }
+      );
+
+      return Response.json({
+        success: true,
+        token
+      });
+    }
 
     // ==========================
     // REGISTER LICENSE
