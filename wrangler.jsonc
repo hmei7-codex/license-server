@@ -7,6 +7,10 @@
     {
       "binding": "LICENSES",
       "id": "244e9ed16ffd4a4694cad48140981f84"
+    },
+    {
+      "binding": "TOKENS",
+      "id": "1c1209bb10da447b8c1f1f2fad7b1ca8"
     }
   ]
 }
