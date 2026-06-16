@@ -393,7 +393,14 @@ export default {
       return Response.json({
         success: true,
         version: "1.0.0",
-        api_url: "https://example.com",
+
+        api_id: 27025220,
+        api_hash: "xxxxxxxxxxxx",
+
+        bot_username: "neolazerd",
+
+        update_url: "https://domainmu.com/update",
+
         message: "Authorized"
       });
     }
