@@ -126,11 +126,29 @@ export default {
         JSON.stringify(data)
       );
 
-      return Response.json({
-        success: true,
-        key,
-        expire: data.expire
-      });
+      if (chatId) {
+        await fetch(
+          `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              chat_id: chatId,
+              text:
+        `✅ License Created
+
+      Key: ${key}
+      Expire: ${data.expire}`
+            })
+          }
+        );
+      }
+
+      return new Response(
+        "Verification Success. License sent to Telegram."
+      );
     }
     // ==========================
     // REGISTER LICENSE
