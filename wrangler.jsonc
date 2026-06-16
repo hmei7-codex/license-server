@@ -14,6 +14,10 @@
     {
       "binding": "TOKENS",
       "id": "1c1209bb10da447b8c1f1f2fad7b1ca8"
+    },
+    {
+      "binding": "USERS",
+      "id": "ID_USERS_KV"
     }
   ]
 }
