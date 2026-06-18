@@ -406,6 +406,158 @@ export default {
     }
 
     // ==========================
+    // VERIFY PAGE
+    // ==========================
+    if (url.pathname === "/verify") {
+
+    const token =
+    url.searchParams.get("token");
+
+    const html = `
+    <!DOCTYPE html>
+
+    <html>
+
+    <head>
+
+    <meta charset="UTF-8">
+
+    <title>NeoCloud Verification</title>
+
+    <style>
+
+    body{
+
+    background:#0f172a;
+
+    color:white;
+
+    font-family:Arial;
+
+    text-align:center;
+
+    padding-top:100px;
+
+    }
+
+    .logo{
+
+    font-size:70px;
+
+    font-weight:bold;
+
+    text-shadow:0 0 15px #38bdf8;
+
+    }
+
+    .title{
+
+    font-size:35px;
+
+    margin-top:30px;
+
+    }
+
+    .count{
+
+    font-size:90px;
+
+    margin-top:30px;
+
+    color:#22c55e;
+
+    }
+
+    .info{
+
+    margin-top:20px;
+
+    color:#94a3b8;
+
+    }
+
+    </style>
+
+    </head>
+
+    <body>
+
+    <div class="logo">
+
+    ☁️ NEOCLOUDE ☁️
+
+    </div>
+
+    <div class="title">
+
+    🔒 License Verification
+
+    </div>
+
+    <p>
+
+    Harap tunggu...
+
+    </p>
+
+    <div class="count" id="cd">
+
+    5
+
+    </div>
+
+    <div class="info">
+
+    Mengalihkan ke ZerAds...
+
+    </div>
+
+
+    <script>
+
+    let i=5;
+
+    const x = setInterval(()=>{
+
+    i--;
+
+    document.getElementById(
+    'cd'
+    ).innerText=i;
+
+    if(i<=0){
+
+    clearInterval(x);
+
+    window.open(
+    'https://zerads.com/O833Q7f',
+    '_blank'
+    );
+
+    }
+
+    },1000);
+
+
+    </script>
+
+    </body>
+
+    </html>
+    `;
+
+    return new Response(
+    html,
+    {
+    headers:{
+    'content-type':'text/html'
+    }
+    }
+    );
+
+    }
+
+    // ==========================
     // VERSION
     // ==========================
     if (url.pathname === "/version") {
