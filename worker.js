@@ -469,12 +469,6 @@ export default {
         message: "Authorized"
       });
     }
-
-    
-    // ==========================
-    // VERIFY PAGE
-    // ==========================
-    
     // ==========================
     // VERIFY PAGE
     // ==========================
@@ -524,10 +518,10 @@ export default {
 
             clearInterval(x);
 
-            window.open(
-                'https://zerads.com/O833Q7f',
-                '_blank'
-            );
+         // window.open(
+         //     'https://zerads.com/O833Q7f',
+         //     '_blank'
+         // );
 
             setTimeout(()=>{
 
