@@ -127,8 +127,14 @@ export default {
 
         return Response.json({
           success: true,
+
+          token: token,
+
+          verify:
+          `https://vip.neolaze.workers.dev/verify?token=${token}`,
+
           shrinkearn: shortlink
-      });
+        });
 
     } catch (e) {
 
