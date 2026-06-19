@@ -568,17 +568,8 @@ export default {
 
             clearInterval(x);
 
-            window.open(
-                'https://zerads.com/O833Q7f',
-                '_blank'
-            );
-
-            setTimeout(()=>{
-
-                location.href =
-                '/success?token=${token}';
-
-            },10000);
+            location.href =
+            '/success?token=${token}';
 
         }
 
