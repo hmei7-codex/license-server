@@ -464,6 +464,11 @@ export default {
       });
     }
 
+    
+    // ==========================
+    // VERIFY PAGE
+    // ==========================
+    
     // ==========================
     // VERIFY PAGE
     // ==========================
@@ -471,194 +476,79 @@ export default {
 
         const token = url.searchParams.get("token");
 
-        return Response.json({
-            token: token,
-            exists: !!token
-        });
+        if (!token) {
+            return new Response("Token required");
+        }
 
-    }
+        const raw = await env.TOKENS.get(token);
 
-    const token =
-    url.searchParams.get("token");
+        if (!raw) {
+            return new Response("Invalid token");
+        }
 
-    const html = `
+        const html = `
+
     <!DOCTYPE html>
-
     <html>
 
     <head>
-
     <meta charset="UTF-8">
-
     <title>NeoCloud Verification</title>
-
-    <style>
-
-    body{
-
-    background:#0f172a;
-
-    color:white;
-
-    font-family:Arial;
-
-    text-align:center;
-
-    padding-top:100px;
-
-    }
-
-    .logo{
-
-    font-size:70px;
-
-    font-weight:bold;
-
-    text-shadow:0 0 15px #38bdf8;
-
-    }
-
-    .title{
-
-    font-size:35px;
-
-    margin-top:30px;
-
-    }
-
-    .count{
-
-    font-size:90px;
-
-    margin-top:30px;
-
-    color:#22c55e;
-
-    }
-
-    .info{
-
-    margin-top:20px;
-
-    color:#94a3b8;
-
-    }
-
-    </style>
-
     </head>
 
     <body>
 
-    <div class="logo">
+    <h2>NeoCloud Verification</h2>
 
-    ☁️ NEOCLOUDE ☁️
+    <p>Harap tunggu...</p>
 
-    </div>
+    <h1 id="cd">5</h1>
 
-    <div class="title">
+    <script>
 
-    🔒 License Verification
+    let i = 5;
 
-    </div>
+    const x = setInterval(()=>{
 
-    <p>
+        i--;
 
-    Harap tunggu...
+        document.getElementById("cd").innerText=i;
 
-    </p>
+        if(i<=0){
 
-    <div class="count" id="cd">
+            clearInterval(x);
 
-    5
+            window.open(
+                'https://zerads.com/O833Q7f',
+                '_blank'
+            );
 
-    </div>
+            setTimeout(()=>{
 
-    <div class="info">
+                location.href =
+                '/success?token=${token}';
 
-    Mengalihkan ke ZerAds...
+            },10000);
 
-    </div>
-// ==========================
-// VERIFY PAGE
-// ==========================
-if (url.pathname === "/verify") {
+        }
 
-    const token = url.searchParams.get("token");
+    },1000);
 
-    if (!token) {
-        return new Response("Token required");
-    }
+    </script>
 
-    const raw = await env.TOKENS.get(token);
+    </body>
+    </html>
 
-    if (!raw) {
-        return new Response("Invalid token");
-    }
+    `;
 
-    const html = `
+          return new Response(html,{
+              headers:{
+                  "content-type":"text/html"
+              }
+          });
 
-<!DOCTYPE html>
-<html>
-
-<head>
-<meta charset="UTF-8">
-<title>NeoCloud Verification</title>
-</head>
-
-<body>
-
-<h2>NeoCloud Verification</h2>
-
-<p>Harap tunggu...</p>
-
-<h1 id="cd">5</h1>
-
-<script>
-
-let i = 5;
-
-const x = setInterval(()=>{
-
-    i--;
-
-    document.getElementById("cd").innerText=i;
-
-    if(i<=0){
-
-        clearInterval(x);
-
-        window.open(
-            'https://zerads.com/O833Q7f',
-            '_blank'
-        );
-
-        setTimeout(()=>{
-
-            location.href =
-            '/success?token=${token}';
-
-        },10000);
-
-    }
-
-},1000);
-
-</script>
-
-</body>
-</html>
-
-`;
-
-      return new Response(html,{
-          headers:{
-              "content-type":"text/html"
-          }
-      });
-
-    }
-
+    }   
+    
     // ==========================
     // VERSION
     // ==========================
