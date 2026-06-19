@@ -66,7 +66,6 @@ export default {
       );
 
       const targetUrl =
-        const targetUrl =
         `https://vip.neolaze.workers.dev/verify?token=${token}`;
 
       const apiUrl =
