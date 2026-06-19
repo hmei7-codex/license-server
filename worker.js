@@ -50,19 +50,19 @@ export default {
     // CREATE SHRINKEARN LINK
     // ==========================
     if (url.pathname === "/create-link") {
-
-    const chatId = url.searchParams.get("chat_id");
-
-    if (!chatId) {
-      return Response.json({
-        success: false,
-        message: "chat_id required"
+      
+      const chatId = url.searchParams.get("chat_id");
+      
+      if (!chatId) {
+        return Response.json({
+          success: false,
+          message: "chat_id required"
         });
-    }
-
-    const token = generateToken();
-
-    await env.TOKENS.put(
+      }
+      
+      const token = generateToken();
+      
+      await env.TOKENS.put(
       token,
       JSON.stringify({
         created: Date.now(),
@@ -71,58 +71,60 @@ export default {
       {
         expirationTtl: 3600
       }
-    );
-
-    const targetUrl =
+      );
+      
+      const targetUrl =
       `https://vip.neolaze.workers.dev/verify?token=${token}`;
-
-    const apiUrl =
-    `https://shrinkearn.com/api?api=${SHRINKEARN_API}&url=${encodeURIComponent(targetUrl)}`;
-
-    try {
-
-      const response = await fetch(apiUrl);
-      const result = await response.text();
-
-      let data;
-
+      
+      const apiUrl =
+      `https://shrinkearn.com/api?api=${SHRINKEARN_API}&url=${encodeURIComponent(targetUrl)}`;
+      
       try {
-        data = JSON.parse(result);
-      } catch {
-
+        
+        const response = await fetch(apiUrl);
+        const result = await response.text();
+        
+        let data;
+        
+        try {
+          data = JSON.parse(result);
+        } catch {
+        
         return Response.json({
           success: false,
           message: "ShrinkEarn invalid response",
           raw: result
         });
-
+        
       }
-
+      
       if (!data.shortenedUrl) {
-
+        
         return Response.json({
           success: false,
           message: "ShrinkEarn gagal membuat link",
           raw: data
         });
-
+        
       }
-
+      
       return Response.json({
         success: true,
         shrinkearn: data.shortenedUrl
       });
-
-   } catch (e) {
-
-     return Response.json({
-       success: false,
-       message: e.toString()
-     });
-
-   }
-
-    }
+      
+    } catch (e) {
+    
+    return Response.json({
+      success: false,
+      message: e.toString()
+    });
+    
+  }
+  
+}
+      
+    
     // ==========================
     // SUCCESS
     // ==========================
