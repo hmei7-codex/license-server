@@ -477,13 +477,124 @@ export default {
 
         const token = url.searchParams.get("token");
 
+        if (!token) {
+            return new Response("Token required");
+        }
+
         const raw = await env.TOKENS.get(token);
 
-        return Response.json({
-            token,
-            exists: !!raw,
-            raw
-        });
+        if (!raw) {
+            return new Response("Invalid token");
+        }
+
+        const html = `
+     <!DOCTYPE html>
+     <html>
+
+     <head>
+
+     <meta charset="UTF-8">
+
+     <title>NeoCloud Verification</title>
+
+     <style>
+
+     body{
+         background:#0f172a;
+         color:white;
+         font-family:Arial;
+         text-align:center;
+         padding-top:100px;
+    }
+
+    .logo{
+        font-size:60px;
+        font-weight:bold;
+        color:#38bdf8;
+    }
+
+    .title{
+        font-size:30px;
+        margin-top:20px;
+    }
+
+    .count{
+        font-size:90px;
+        color:#22c55e;
+        margin-top:20px;
+    }
+
+    .info{
+        color:#94a3b8;
+        margin-top:20px;
+    }
+
+    </style>
+
+    </head>
+
+    <body>
+
+    <div class="logo">
+    ☁️ NEOCLOUDE ☁️
+    </div>
+
+    <div class="title">
+    🔒 License Verification
+    </div>
+
+    <p>Harap tunggu...</p>
+
+    <div class="count" id="cd">
+    5
+    </div>
+
+    <div class="info">
+    Mengalihkan ke ZerAds...
+    </div>
+
+
+    <script>
+
+    let i = 5;
+
+    const x = setInterval(()=>{
+
+        i--;
+
+        document.getElementById("cd").innerText = i;
+
+        if(i <= 0){
+
+            clearInterval(x);
+
+            window.open(
+                'https://zerads.com/O833Q7f',
+                '_blank'
+            );
+
+            setTimeout(()=>{
+
+                location.href =
+                '/success?token=${token}';
+
+            },10000);
+
+        }
+
+    },1000);
+
+    </script>
+
+    </body>
+    </html>
+    `;
+
+         return new Response(html,{
+             headers:{
+                 "content-type":"text/html"
+             }
+         });
 
     }
 
