@@ -472,82 +472,22 @@ export default {
     // ==========================
     // VERIFY PAGE
     // ==========================
+
     if (url.pathname === "/verify") {
 
         const token = url.searchParams.get("token");
 
-        if (!token) {
-            return new Response("Token required");
-        }
-
         const raw = await env.TOKENS.get(token);
 
-        if (!raw) {
-            return new Response("Invalid token");
-        }
+        return Response.json({
+            token,
+            exists: !!raw,
+            raw
+        });
 
-        const html = `
+    }
 
-    <!DOCTYPE html>
-    <html>
-
-    <head>
-    <meta charset="UTF-8">
-    <title>NeoCloud Verification</title>
-    </head>
-
-    <body>
-
-    <h2>NeoCloud Verification</h2>
-
-    <p>Harap tunggu...</p>
-
-    <h1 id="cd">5</h1>
-
-    <script>
-
-    let i = 5;
-
-    const x = setInterval(()=>{
-
-        i--;
-
-        document.getElementById("cd").innerText=i;
-
-        if(i<=0){
-
-            clearInterval(x);
-
-         // window.open(
-         //     'https://zerads.com/O833Q7f',
-         //     '_blank'
-         // );
-
-            setTimeout(()=>{
-
-                location.href =
-                '/success?token=${token}';
-
-            },10000);
-
-        }
-
-    },1000);
-
-    </script>
-
-    </body>
-    </html>
-
-    `;
-
-          return new Response(html,{
-              headers:{
-                  "content-type":"text/html"
-              }
-          });
-
-    }   
+    
     
     // ==========================
     // VERSION
