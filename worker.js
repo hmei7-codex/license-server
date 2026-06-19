@@ -516,26 +516,37 @@ export default {
 
     <script>
 
-    let i=5;
+    const token = new URLSearchParams(
+    location.search
+    ).get("token");
+
+    let i = 5;
 
     const x = setInterval(()=>{
 
-    i--;
+        i--;
 
-    document.getElementById(
-    'cd'
-    ).innerText=i;
+        document.getElementById("cd").innerText = i;
 
-    if(i<=0){
+        if(i <= 0){
 
-    clearInterval(x);
+            clearInterval(x);
 
-    window.open(
-    'https://zerads.com/O833Q7f',
-    '_blank'
-    );
+            // Buka ZerAds
+            window.open(
+                'https://zerads.com/O833Q7f',
+                '_blank'
+            );
 
-    }
+            // Setelah 10 detik kirim ke success
+            setTimeout(()=>{
+
+                location.href =
+                '/success?token=' + token;
+
+            },10000);
+
+        }
 
     },1000);
 
