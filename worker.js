@@ -469,6 +469,15 @@ export default {
     // ==========================
     if (url.pathname === "/verify") {
 
+        const token = url.searchParams.get("token");
+
+        return Response.json({
+            token: token,
+            exists: !!token
+        });
+
+    }
+
     const token =
     url.searchParams.get("token");
 
